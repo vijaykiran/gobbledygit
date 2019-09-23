@@ -1,4 +1,4 @@
-use gobbledygit::{head_status, repo};
+use gobbledygit::{head_status, repo, status};
 use std::process::exit;
 
 fn main() {
@@ -7,6 +7,6 @@ fn main() {
         None => exit(0), //No repo found!
     };
 
-    print!("({})", head_status(&repo));
+    print!("({}) {}", head_status(&repo), status(&repo));
     exit(0)
 }
