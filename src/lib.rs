@@ -1,8 +1,7 @@
 use core::fmt;
-use git2::{ErrorCode, Repository, RepositoryOpenFlags, Status, Statuses, SubmoduleIgnore};
+use git2::{ErrorCode, Repository, RepositoryOpenFlags, Status, Statuses};
 use std::fmt::{Error, Formatter};
 use std::path::Path;
-use std::str;
 
 struct GitStatus {
     new: i32,
@@ -14,11 +13,28 @@ struct GitStatus {
 
 impl fmt::Display for GitStatus {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), Error> {
-        write!(
-            f,
-            "{}A {}M {}D {}R {}T",
-            self.new, self.modified, self.deleted, self.renamed, self.type_changed
-        )
+        let mut fmt_string = String::new();
+        // TODO: Too much duplication, refactor this into a impl fn?
+        if self.new != 0 {
+            fmt_string.push_str(format!("{}A", self.new).as_str())
+        }
+
+        if self.modified != 0 {
+            fmt_string.push_str(format!("{}M", self.modified).as_str())
+        }
+
+        if self.deleted != 0 {
+            fmt_string.push_str(format!("{}D", self.deleted).as_str())
+        }
+
+        if self.renamed != 0 {
+            fmt_string.push_str(format!("{}R", self.renamed).as_str())
+        }
+
+        if self.type_changed != 0 {
+            fmt_string.push_str(format!("{}T", self.type_changed).as_str())
+        }
+        write!(f, "{}", fmt_string)
     }
 }
 
@@ -56,6 +72,7 @@ pub fn status(repo: &Repository) -> String {
 }
 
 fn git_status(statuses: &Statuses) -> GitStatus {
+    //TODO: Currently combines both index and working tree status. Separate them
     let mut new = 0;
     let mut modified = 0;
     let mut renamed = 0;
