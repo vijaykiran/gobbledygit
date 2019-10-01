@@ -9,6 +9,7 @@ struct GitStatus {
     deleted: i32,
     renamed: i32,
     type_changed: i32,
+    conflicted: i32,
 }
 
 impl fmt::Display for GitStatus {
@@ -33,6 +34,9 @@ impl fmt::Display for GitStatus {
 
         if self.type_changed != 0 {
             fmt_string.push_str(format!("{}T", self.type_changed).as_str())
+        }
+        if self.conflicted != 0 {
+            fmt_string.push_str(format!("{}C", self.conflicted).as_str())
         }
         write!(f, "{}", fmt_string)
     }
@@ -78,6 +82,7 @@ fn git_status(statuses: &Statuses) -> GitStatus {
     let mut renamed = 0;
     let mut deleted = 0;
     let mut type_changed = 0;
+    let mut conflicted = 0;
 
     for entry in statuses.iter().filter(|e| e.status() != Status::CURRENT) {
         match entry.status() {
@@ -86,6 +91,7 @@ fn git_status(statuses: &Statuses) -> GitStatus {
             s if s.contains(Status::INDEX_DELETED) => deleted += 1,
             s if s.contains(Status::INDEX_RENAMED) => renamed += 1,
             s if s.contains(Status::INDEX_TYPECHANGE) => type_changed += 1,
+            s if s.contains(Status::CONFLICTED) => conflicted += 1,
             _ => (),
         };
 
@@ -104,5 +110,6 @@ fn git_status(statuses: &Statuses) -> GitStatus {
         renamed,
         deleted,
         type_changed,
+        conflicted,
     }
 }
