@@ -3,8 +3,11 @@ name = "gobbledygit"
 version = "0.1.0"
 authors = ["Vijay Kiran <mail@vijaykiran.com>"]
 edition = "2018"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+description = "A tool to print the git repository status"
+license = "Unlicense OR MIT"
+homepage = "https://github.com/vijaykiran/gobbledygit"
+repository = "https://github.com/vijaykiran/gobbledygit"
+readme = "README.md"
 
 [dependencies]
 git2 = "0.10.1"
