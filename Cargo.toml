@@ -5,7 +5,7 @@ authors = ["Vijay Kiran <mail@vijaykiran.com>"]
 edition = "2018"
 description = "A tool to print the git repository status"
 license = "Unlicense OR MIT"
-homepage = "https://github.com/vijaykiran/gobbledygit"
+homepage = "https://git.sr.ht/~vijaykiran/gobbledygit"
 repository = "https://github.com/vijaykiran/gobbledygit"
 readme = "README.md"
 
