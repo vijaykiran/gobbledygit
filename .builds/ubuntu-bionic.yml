@@ -1,0 +1,24 @@
+image: ubuntu/bionic
+
+packages:
+  - curl
+  - pkg-config
+  - libssl-dev
+
+sources:
+  - https://git.sr.ht/~vijaykiran/gobbledygit
+
+tasks:
+  - setup-rust: |
+      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      source $HOME/.cargo/env
+      export PATH=$PATH:$HOME/.cargo/bin
+      rustup component add clippy-preview
+
+  - build-project: |
+      source $HOME/.cargo/env
+      export PATH=$PATH:$HOME/.cargo/bin
+      cd gobbledygit
+      cargo build
+      cargo clippy
+      cargo test
