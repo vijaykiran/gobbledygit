@@ -10,5 +10,5 @@ repository = "https://github.com/vijaykiran/gobbledygit"
 readme = "README.md"
 
 [dependencies]
-git2 = "0.10.1"
+git2 = "0.16.1"
 itertools = "0.8.0"
